@@ -3,6 +3,7 @@ package bu.nopachai.butraffic;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -17,7 +18,7 @@ public class ExerciseActivity extends AppCompatActivity {
     private RadioGroup choiceRadioGroup;
     private RadioButton choice1RadioButton, choice2RadioButton,
             choice3RadioButton, choice4RadioButton;
-    private int timesAnInt = 0;
+    private int timesAnInt = 0, scoreAnInt = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,8 @@ public class ExerciseActivity extends AppCompatActivity {
         choice2RadioButton.setText(strMyChoice[1]);
         choice3RadioButton.setText(strMyChoice[2]);
         choice4RadioButton.setText(strMyChoice[3]);
+
+
 
     }
 
@@ -62,6 +65,8 @@ public class ExerciseActivity extends AppCompatActivity {
         intChoice[3] = R.array.times4;
         intChoice[4] = R.array.times5;
 
+        checkScore();
+
         timesAnInt += 1;
 
         if (timesAnInt < 5) {
@@ -74,14 +79,53 @@ public class ExerciseActivity extends AppCompatActivity {
             choice3RadioButton.setText(strMyChoice[2]);
             choice4RadioButton.setText(strMyChoice[3]);
 
+
+
         } else {
 
-            startActivity(new Intent(ExerciseActivity.this, ScoreActivity.class));
+            Intent objIntent = new Intent(ExerciseActivity.this, ScoreActivity.class);
+            objIntent.putExtra("Score", scoreAnInt);
+            startActivity(objIntent);
 
         }
 
 
     } // clickAnswer
+
+    private void checkScore() {
+
+        final int[] intUserChoose = {1,2,3,4,4};
+        choiceRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                int intRadio;
+                switch (checkedId) {
+                    case R.id.radioButton:
+                        intRadio = 1;
+                        break;
+                    case R.id.radioButton2:
+                        intRadio = 2;
+                        break;
+                    case R.id.radioButton3:
+                        intRadio = 3;
+                        break;
+                    case R.id.radioButton4:
+                        intRadio = 4;
+                        break;
+                        default:
+                            intRadio = 0;
+                }
+
+                if (intUserChoose[timesAnInt] == intRadio) {
+                    scoreAnInt += 1;
+                    Log.d("test", "Score ==> " + Integer.toString(scoreAnInt));
+                }
+
+            }   // event
+        });
+
+    }   //checkScore
 
     private void bindWidget() {
         questionTextView = (TextView) findViewById(R.id.textView5);

@@ -9,4 +9,11 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="bu.nopachai.butraffic.ScoreActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:id="@+id/textView6"
+        android:textSize="300sp"
+        android:layout_centerInParent="true" />
 </RelativeLayout>
